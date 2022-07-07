@@ -19,14 +19,14 @@ namespace UwpDictionary
 		[Column("definition")][Required] public string Definition { get; set; }
 	}
 
-	[Table("favorites")]
-	public class Favorite
+	[Table("bookmarks")]
+	public class Bookmark
 	{
 		[Key][Column("id")] public int Id { get; set; }
 
-		[Column("word_id")][Required] public int WordId { get; set; }
+		[Column("word_id")] public int WordId { get; set; }
 
-		[Column("value")][Required] public string Value { get; set; }
+		[Column("value")]public string Value { get; set; }
 	}
 
 	[Table("histories")]

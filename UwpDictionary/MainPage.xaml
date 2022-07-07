@@ -4,38 +4,52 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UwpDictionary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vungle="using:VungleSDK.UI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 	<Page.Resources>
 		<FontFamily x:Key="AppFont">Suwannaphum</FontFamily>
-		<FontFamily x:Key="IconFont">Segoe Fluent Icons</FontFamily>
+        <FontFamily x:Key="IconFont">Segoe MDL2 Assets</FontFamily>
 	</Page.Resources>
 	<Grid>
 		<ui:NavigationView 
+            BackRequested="NavView_BackRequested"
+            x:Name="NavView"
+            ItemInvoked="NavigationView_ItemInvoked"
       IsPaneToggleButtonVisible="False"
+           
       IsSettingsVisible="False"
       PaneDisplayMode="Left"
+            IsBackEnabled="True"
       OpenPaneLength="220">
 			<ui:NavigationView.MenuItems>
-				<ui:NavigationViewItem FontFamily="{StaticResource AppFont}"
-          x:Uid="HomeNavItem" Tag="home">
+                <ui:NavigationViewItem 
+                    FontSize="16" 
+                    FontFamily="{StaticResource AppFont}"
+          x:Uid="HomeNavItem"
+                    Tag="home">
 					<ui:NavigationViewItem.Icon>
 						<FontIcon FontFamily="{StaticResource IconFont}" Glyph="&#xe80f;"/>
 					</ui:NavigationViewItem.Icon>
 				</ui:NavigationViewItem>
 
-				<ui:NavigationViewItem FontFamily="{StaticResource AppFont}"
-          x:Uid="HistoryNavItem" Tag="history">
+				<ui:NavigationViewItem
+                    FontSize="16"
+                    FontFamily="{StaticResource AppFont}"
+          x:Uid="HistoryNavItem"
+                    Tag="history">
 					<ui:NavigationViewItem.Icon>
 						<FontIcon FontFamily="{StaticResource IconFont}" Glyph="&#xe81c;"/>
 					</ui:NavigationViewItem.Icon>
 				</ui:NavigationViewItem>
 
 				<ui:NavigationViewItem
+                    FontSize="16"
           FontFamily="{StaticResource AppFont}"
-          x:Uid="BookmarkNavItem" Tag="bookmark">
+          x:Uid="BookmarkNavItem" 
+                    Tag="bookmark">
 					<ui:NavigationViewItem.Icon>
 						<FontIcon FontFamily="{StaticResource IconFont}" Glyph="&#xe8a4;"/>
 					</ui:NavigationViewItem.Icon>
@@ -43,22 +57,56 @@
 			</ui:NavigationView.MenuItems>
 
 			<ui:NavigationView.FooterMenuItems>
-				<ui:NavigationViewItem FontFamily="{StaticResource AppFont}"
-          x:Uid="AboutNavItem" Tag="about">
+                <ui:NavigationViewItem 
+                    SelectsOnInvoked="False"
+                    FontSize="16"
+                    FontFamily="{StaticResource AppFont}"
+          x:Uid="VideoAdNavItem" 
+                                       Tag="video_ad">
+                    <ui:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource IconFont}" Glyph="&#xE714;"/>
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem 
+                    FontSize="16"
+                    FontFamily="{StaticResource AppFont}"
+          x:Uid="AboutNavItem" 
+                                       Tag="about">
 					<ui:NavigationViewItem.Icon>
 						<FontIcon FontFamily="{StaticResource IconFont}" Glyph="&#xe946;"/>
 					</ui:NavigationViewItem.Icon>
 				</ui:NavigationViewItem>
 
-				<ui:NavigationViewItem FontFamily="{StaticResource AppFont}"
-          x:Uid="SettingsNavItem" Tag="settings">
+				<ui:NavigationViewItem
+                    FontSize="16"
+                    FontFamily="{StaticResource AppFont}"
+          x:Uid="SettingsNavItem" 
+                                       Tag="settings">
 					<ui:NavigationViewItem.Icon>
 						<FontIcon FontFamily="{StaticResource IconFont}" Glyph="&#xe713;"/>
 					</ui:NavigationViewItem.Icon>
 				</ui:NavigationViewItem>
 			</ui:NavigationView.FooterMenuItems>
 
-			<Frame x:Name="ContentFrame"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Frame x:Name="ContentFrame" IsNavigationStackEnabled="True"/>
+                <vungle:VungleAdControl
+                    Background="Black"
+                    x:Name="VungleBanner"
+                    AutomationProperties.AutomationId="vungleBannerControl"
+                    Grid.Row="1"
+                    IsBannerAd="True"
+                    AutoRun="True"
+                    Width="320"
+                    Height="50"
+                    AppID="5c91b152974c19001132e471"
+                    Placement="BANNER-4643114"
+                    />
+            </Grid>
 		</ui:NavigationView>
 	</Grid>
 </Page>

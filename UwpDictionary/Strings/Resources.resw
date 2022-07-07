@@ -120,8 +120,14 @@
   <data name="AboutNavItem.Content" xml:space="preserve">
     <value>អំពីកម្មវិធី</value>
   </data>
+  <data name="AboutTextBlock.Text" xml:space="preserve">
+    <value>អំពីកម្មវិធី</value>
+  </data>
   <data name="BookmarkNavItem.Content" xml:space="preserve">
     <value>បញ្ជីពាក្យចំណាំ</value>
+  </data>
+  <data name="EmptyTextBlock.Text" xml:space="preserve">
+    <value>មិនមានពាក្យ</value>
   </data>
   <data name="HistoryNavItem.Content" xml:space="preserve">
     <value>បញ្ជីពាក្យធ្លាប់មើល</value>
@@ -134,5 +140,11 @@
   </data>
   <data name="SettingsNavItem.Content" xml:space="preserve">
     <value>ការកំណត់</value>
+  </data>
+  <data name="SettingsTextBlock.Text" xml:space="preserve">
+    <value>ការកំណត់</value>
+  </data>
+  <data name="VideoAdNavItem.Content" xml:space="preserve">
+    <value>មើលវីដេអូពាណិជ្ជកម្ម</value>
   </data>
 </root>

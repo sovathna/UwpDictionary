@@ -1,15 +1,18 @@
 ﻿<Page
-    x:Class="UwpDictionary.Pages.Words.WordsPage"
+    x:Class="UwpDictionary.Pages.Words.AbstractWordsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:root="using:UwpDictionary"
 	xmlns:ui="using:Microsoft.UI.Xaml.Controls"
+    NavigationCacheMode="Enabled"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 	<Page.Resources>
 		<root:BoolToVisibiliy x:Key="boolToVisibility"/>
-		<FontFamily x:Key="AppFont">Suwannaphum</FontFamily>
+        <root:IntToVisibiliy x:Key="intToVisibility"/>
+        <FontFamily x:Key="IconFont">Segoe MDL2 Assets</FontFamily>
+        <FontFamily x:Key="AppFont">Suwannaphum</FontFamily>
 	</Page.Resources>
 
 	<Grid>
@@ -25,6 +28,7 @@
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 				<TextBox 
+                    FontSize="16"
 					TextChanged="SearchTextBox_TextChanged"
 					x:Uid="SearchTextBox" 
 					x:Name="SearchTextBox" 
@@ -36,31 +40,70 @@
 			 CornerRadius="8"
 			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 				<ListView
-					
+                    x:Name="WordListView"
+                    IsItemClickEnabled="True"
+					ItemClick="ListView_ItemClick"
 					ItemsSource="{x:Bind _viewModel.WordCollection, Mode=OneWay}">
 					<ListView.ItemTemplate>
 						<DataTemplate x:DataType="root:WordUi">
 							<TextBlock
+                                FontSize="16"
                                 Text="{Binding Value, Mode=OneWay}"
                                 FontFamily="{StaticResource AppFont}" />
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>
 			</Border>
-			<ui:ProgressRing 
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Grid.Row="1"
+                FontSize="16"
+                FontFamily="{StaticResource AppFont}"
+                x:Uid="EmptyTextBlock" 
+                Visibility="{x:Bind _viewModel.EmptyVisibility(_viewModel.WordCollection.Count,_viewModel.WordCollection.IsLoading), Mode=OneWay}"/>
+            <ui:ProgressRing 
 					Grid.Row="1"
 					IsIndeterminate="True" 
-					Visibility="{x:Bind _viewModel.WordCollection.IsLoading, Converter={StaticResource boolToVisibility}, Mode=OneWay}"/>
+					Visibility="{x:Bind _viewModel.IsLoading(_viewModel.WordCollection.IsLoading), Mode=OneWay}"/>
 			</Grid>
-		
-		<Border 
+
+        <Grid	Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock 
+                x:Name="WordTextBlock" 
+                Margin="32,16,32,0"
+                       FontSize="22"
+                       FontFamily="{StaticResource AppFont}"/>
+            <Button
+                x:Name="BookmarkButton"
+                Margin="0,16,32,0"
+                       Click="Button_Click"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right">
+                <FontIcon 
+                    x:Name="BookmarkIcon"
+                FontFamily="{StaticResource IconFont}" 
+                Glyph="&#xE734;" />
+            </Button>
+            <Border 
+                Grid.Row="1"
 			Margin="16"
-			Grid.Column="1"
 			CornerRadius="8"
 			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-			<RichTextBlock x:Name="DefTextBlock" />
-
-		</Border>
-	</Grid>
+                <Grid>
+                    <ScrollViewer HorizontalScrollMode="Disabled">
+                        <RichTextBlock 
+                            FontSize="16"
+                Margin="16"
+                x:Name="DefTextBlock"
+                FontFamily="{StaticResource AppFont}"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </Page>

@@ -8,36 +8,70 @@ using System.Diagnostics;
 
 namespace UwpDictionary.Pages.Words
 {
-	public class WordsSource : IIncrementalSource<WordUi>
-	{
-		private readonly WordsDbContext _context;
-		private readonly string _filter;
+    public class WordsSource : IIncrementalSource<WordUi>
+    {
+        private readonly WordsDbContext _context;
+        private readonly LocalDbContext _localContext;
+        private readonly string _filter;
+        private readonly WordsType _type;
 
-		public WordsSource(WordsDbContext context, string filter)
-		{
-			_context = context;
-			_filter = filter;
-		}
+        public WordsSource(WordsDbContext context, LocalDbContext localContext, WordsType type, string filter)
+        {
+            _context = context;
+            _localContext = localContext;
+            _type = type;
+            _filter = filter;
+        }
 
-		public Task<IEnumerable<WordUi>> GetPagedItemsAsync(
-			int pageIndex, int pageSize,
-			CancellationToken cancellationToken = new CancellationToken()
-		)
-		{
-			Task.Run(() =>
-			{
-				Debug.WriteLine("GetPagedItems {0}", pageIndex);
-			});
-			return Task.Run(() =>
-			{
-				return _context.Words
-				.Where(w => w.Value.StartsWith(_filter))
-				.OrderBy(w => w.Value)
-					.Select(w => new WordUi { Id = w.Id, Value = w.Value })
-					.Skip(pageIndex * pageSize)
-					.Take(pageSize)
-					.AsEnumerable();
-			}, cancellationToken);
-		}
-	}
+        public Task<IEnumerable<WordUi>> GetPagedItemsAsync(
+            int pageIndex, int pageSize,
+            CancellationToken cancellationToken = new CancellationToken()
+        )
+        {
+            Task.Run(() =>
+            {
+                Debug.WriteLine($"GetPagedItems {pageIndex}");
+            });
+            return Task.Run(() =>
+            {
+                switch (_type)
+                {
+                    case WordsType.HISTORY:
+                        return _localContext.Histories
+                            .AsNoTracking()
+                            .Where(w=>w.Value.StartsWith(_filter))
+                            .OrderByDescending(w => w.Id)
+                            .Select(w => new WordUi { Id = w.WordId, Value = w.Value })
+                            .Skip(pageIndex * pageSize)
+                            .Take(pageSize)
+                            .AsEnumerable();
+                    case WordsType.BOOKMARK:
+                        return _localContext.Bookmarks
+                            .AsNoTracking()
+                            .Where(w => w.Value.StartsWith(_filter))
+                            .OrderByDescending(w => w.Id)
+                            .Select(w => new WordUi { Id = w.WordId, Value = w.Value })
+                            .Skip(pageIndex * pageSize)
+                            .Take(pageSize)
+                            .AsEnumerable();
+                        default:
+                        return _context.Words
+                            .AsNoTracking()
+                            .Where(w => w.Value.StartsWith(_filter))
+                            .OrderBy(w => w.Value)
+                            .Select(w => new WordUi { Id = w.Id, Value = w.Value })
+                            .Skip(pageIndex * pageSize)
+                            .Take(pageSize)
+                            .AsEnumerable();
+                }
+            }, cancellationToken);
+        }
+    }
+
+    public enum WordsType
+    {
+        HOME,
+        HISTORY,
+        BOOKMARK
+    }
 }
