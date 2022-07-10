@@ -26,7 +26,7 @@ namespace UwpDictionary
 
 		[Column("word_id")] public int WordId { get; set; }
 
-		[Column("value")]public string Value { get; set; }
+		[Column("value")] public string Value { get; set; }
 	}
 
 	[Table("histories")]
