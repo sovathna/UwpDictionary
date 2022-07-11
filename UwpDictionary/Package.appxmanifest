@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="bfeda688-1cca-4e36-95e8-880f6e22041a"
-    Publisher="CN=sovat"
+    Name="5940SATYAMOBILE.KhmerDictionary"
+    Publisher="CN=5035C1AC-5BB2-4A8E-980E-57262712BC0B"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="bfeda688-1cca-4e36-95e8-880f6e22041a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="f20d6ef9-000f-40fc-8a48-8a648614ec29" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>UwpDictionary</DisplayName>
-    <PublisherDisplayName>sovat</PublisherDisplayName>
+    <DisplayName>Khmer Dictionary</DisplayName>
+    <PublisherDisplayName>TrendingKH</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="UwpDictionary.App">
       <uap:VisualElements
-        DisplayName="UwpDictionary"
+        DisplayName="Khmer Dictionary"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="UwpDictionary"

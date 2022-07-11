@@ -1,9 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.WindowsAzure.Messaging;
 using System;
+using System.Diagnostics;
 using UwpDictionary.Pages.Words;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Networking.PushNotifications;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -48,6 +52,9 @@ namespace UwpDictionary
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
+
+			InitNotificationsAsync();
+
 			Frame rootFrame = Window.Current.Content as Frame;
 
 			// Do not repeat app initialization when the Window already has content,
@@ -105,6 +112,24 @@ namespace UwpDictionary
 			var deferral = e.SuspendingOperation.GetDeferral();
 			//TODO: Save application state and stop any background activity
 			deferral.Complete();
+		}
+
+		private async void InitNotificationsAsync()
+		{
+			var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+			var hubName = "io.github.sovathna.khmerdictionary";
+			var connectionString = "Endpoint=sb://io-github-sovathna-khmerdictionary.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=tvaFPqxshjUYwEjsUa/o2ubTwH/8bIYozlJdGQqJEso=";
+			var hub = new NotificationHub(hubName, connectionString);
+			Debug.WriteLine(channel.Uri.ToString());
+			var result = await hub.RegisterNativeAsync(channel.Uri);
+
+			// Displays the registration ID so you know it was successful
+			if (result.RegistrationId != null)
+			{
+				var dialog = new MessageDialog("Registration successful: " + result.RegistrationId);
+				dialog.Commands.Add(new UICommand("OK"));
+				await dialog.ShowAsync();
+			}
 		}
 	}
 }
