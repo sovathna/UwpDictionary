@@ -19,7 +19,7 @@ namespace UwpDictionary
 		public MainPage()
 		{
 			_vungle = AdFactory.GetInstance("5c91b152974c19001132e471");
-			_vungle.Diagnostic += VungleAd_Diagnostic;
+			//_vungle.Diagnostic += VungleAd_Diagnostic;
 
 			InitializeComponent();
 			ContentFrame.Navigate(typeof(WordsPage));
