@@ -123,6 +123,9 @@
   <data name="AboutTextBlock.Text" xml:space="preserve">
     <value>អំពីកម្មវិធី</value>
   </data>
+  <data name="AdTextBlock.Text" xml:space="preserve">
+    <value>ផ្ទាំងពាណិជ្ជកម្ម</value>
+  </data>
   <data name="BookmarkNavItem.Content" xml:space="preserve">
     <value>បញ្ជីពាក្យចំណាំ</value>
   </data>
