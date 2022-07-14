@@ -90,8 +90,9 @@
             <Button
                 Width="Auto"
                 Height="Auto"
-                CornerRadius="20"
+                CornerRadius="21"
                 Padding="0"
+				Foreground="AliceBlue"
                 x:Name="BookmarkButton"
                 Margin="0,16,32,0"
                 Click="Button_Click"
@@ -99,12 +100,13 @@
                 Visibility="{x:Bind _viewModel.BookmarkBtnVisibility ,Mode=OneWay}"
                 HorizontalAlignment="Right">
                 <Grid>
-                    <ui:ImageIcon
-                        Width="24"
-                        Height="24"
-                        Margin="8"
+                    <BitmapIcon
+						Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
+                        Width="18"
+                        Height="18"
+                        Margin="12"
                         x:Name="BookmarkIcon"
-                        Source="{x:Bind _viewModel.BookmarkGlyph ,Mode=OneWay}" />
+                        UriSource="{x:Bind _viewModel.BookmarkGlyph ,Mode=OneWay}" />
                 </Grid>
             </Button>
             <Border

@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Windows.Storage;
 
 namespace UwpDictionary
 {
@@ -10,7 +8,7 @@ namespace UwpDictionary
 		public DbSet<History> Histories​ { get; set; }
 		public DbSet<Bookmark> Bookmarks { get; set; }
 
-		public LocalDbContext(DbContextOptions<LocalDbContext> options):base(options)
+		public LocalDbContext(DbContextOptions<LocalDbContext> options) : base(options)
 		{
 			Database.EnsureCreated();
 		}
