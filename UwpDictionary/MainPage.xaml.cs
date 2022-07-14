@@ -17,6 +17,7 @@ namespace UwpDictionary
 	public sealed partial class MainPage : Page
 	{
 		private readonly VungleAd _vungle;
+
 		public MainPage()
 		{
 			_vungle = AdFactory.GetInstance("5c91b152974c19001132e471");
@@ -25,11 +26,33 @@ namespace UwpDictionary
 			InitializeComponent();
 			ContentFrame.Navigate(typeof(WordsPage));
 			NavView.SelectedItem = NavView.MenuItems[0];
+            ContentFrame.Navigated += ContentFrame_Navigated;
 			//var titleBar = CoreApplication.GetCurrentView().TitleBar;
 			//titleBar.ExtendViewIntoTitleBar = true;
 		}
 
-		private void VungleAd_Diagnostic(object sender, DiagnosticLogEvent e)
+        private void ContentFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+			NavView.IsBackEnabled = ContentFrame.CanGoBack;
+            if (ContentFrame.CurrentSourcePageType == typeof(WordsPage))
+            {
+				NavView.SelectedItem = NavView.MenuItems[0];
+			}else if (ContentFrame.CurrentSourcePageType == typeof(HistoriesPage))
+			{
+				NavView.SelectedItem = NavView.MenuItems[1];
+			} else if (ContentFrame.CurrentSourcePageType == typeof(BookmarksPage))
+			{
+				NavView.SelectedItem = NavView.MenuItems[2];
+			}else if (ContentFrame.CurrentSourcePageType == typeof(AboutPage))
+			{
+				NavView.SelectedItem = NavView.FooterMenuItems[1];
+			}else if (ContentFrame.CurrentSourcePageType == typeof(SettingsPage))
+			{
+				NavView.SelectedItem = NavView.FooterMenuItems[2];
+			}
+		}
+
+        private void VungleAd_Diagnostic(object sender, DiagnosticLogEvent e)
 		{
 			System.Diagnostics.Debug.WriteLine("Diagnostic - " + e.Level + " " + e.Type + " " + e.Exception + " " + e.Message);
 		}
@@ -40,19 +63,19 @@ namespace UwpDictionary
 			switch (tag)
 			{
 				case "home":
-					ContentFrame.Navigate(typeof(WordsPage));
+					Navigate(typeof(WordsPage));
 					break;
 				case "history":
-					ContentFrame.Navigate(typeof(HistoriesPage));
+					Navigate(typeof(HistoriesPage));
 					break;
 				case "bookmark":
-					ContentFrame.Navigate(typeof(BookmarksPage));
+					Navigate(typeof(BookmarksPage));
 					break;
 				case "about":
-					ContentFrame.Navigate(typeof(AboutPage));
+					Navigate(typeof(AboutPage));
 					break;
 				case "settings":
-					ContentFrame.Navigate(typeof(SettingsPage));
+					Navigate(typeof(SettingsPage));
 					break;
 				case "video_ad":
 					DispatcherQueue.GetForCurrentThread().TryEnqueue(async () =>
@@ -64,6 +87,14 @@ namespace UwpDictionary
 					break;
 			}
 		}
+
+		private void Navigate(Type pageType)
+        {
+			if(pageType != ContentFrame.CurrentSourcePageType)
+            {
+				ContentFrame.Navigate(pageType);
+            }
+        }
 
 		private void NavView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
 		{

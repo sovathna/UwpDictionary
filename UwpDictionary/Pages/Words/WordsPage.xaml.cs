@@ -45,16 +45,17 @@ namespace UwpDictionary.Pages.Words
 
             var uiSettings = new UISettings();
             _foregroundColor =  uiSettings.GetColorValue(UIColorType.Foreground);
-
-            if (Type == WordsType.HOME)
-            {
-                NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            }
-            else
-            {
-                NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
-            }
             _viewModel.Search("", Type);
+            Loaded += AbstractWordsPage_Loaded;
+        }
+
+        private void AbstractWordsPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Type != WordsType.HOME)
+            {
+                if (_viewModel.WordCollection != null)
+                    _viewModel.WordCollection.RefreshAsync();
+            }
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -121,7 +122,6 @@ namespace UwpDictionary.Pages.Words
                             run.Text = s1;
                             run.Foreground = new SolidColorBrush(_foregroundColor);
                         }
-
                         paragraph.Inlines.Add(run);
                     }
                 }

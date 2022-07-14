@@ -46,20 +46,17 @@ namespace UwpDictionary.Pages.Words
         }
 
         public Visibility BookmarkBtnVisibility =>
-            _bookmarkGlyph == null ? Visibility.Collapsed : Visibility.Visible;
+            _selected==null ? Visibility.Collapsed : Visibility.Visible;
 
-        private string _bookmarkGlyph;
+        private string _bookmarkGlyph = "ms-appx:///Assets/Icons/bookmark_border.png";
 
         public string BookmarkGlyph
         {
             get => _bookmarkGlyph;
             set
             {
-                if (SetProperty(ref _bookmarkGlyph, value))
-                {
+                SetProperty(ref _bookmarkGlyph, value);
                     OnPropertyChanged(nameof(BookmarkBtnVisibility));
-                }
-
             }
         }
 
@@ -184,7 +181,7 @@ namespace UwpDictionary.Pages.Words
         private void ShowBookmarkIcon(bool isBookmark)
         {
             Debug.WriteLine($"isBookmark {isBookmark}");
-            _dispatcherQueue.TryEnqueue(() => BookmarkGlyph = isBookmark ? "\uE735" : "\uE734");
+            _dispatcherQueue.TryEnqueue(() => BookmarkGlyph = isBookmark ? "ms-appx:///Assets/Icons/bookmark.png" : "ms-appx:///Assets/Icons/bookmark_border.png");
         }
 
         public void Dispose()

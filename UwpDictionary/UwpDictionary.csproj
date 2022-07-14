@@ -148,6 +148,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\Icons\bookmark.png" />
+    <Content Include="Assets\Icons\bookmarks.png" />
+    <Content Include="Assets\Icons\bookmark_border.png" />
+    <Content Include="Assets\Icons\history.png" />
+    <Content Include="Assets\Icons\home.png" />
+    <Content Include="Assets\Icons\info.png" />
+    <Content Include="Assets\Icons\scale-200\bookmark.png" />
+    <Content Include="Assets\Icons\scale-200\bookmarks.png" />
+    <Content Include="Assets\Icons\scale-200\bookmark_border.png" />
+    <Content Include="Assets\Icons\scale-200\history.png" />
+    <Content Include="Assets\Icons\scale-200\home.png" />
+    <Content Include="Assets\Icons\scale-200\info.png" />
+    <Content Include="Assets\Icons\scale-200\settings.png" />
+    <Content Include="Assets\Icons\scale-200\videocam.png" />
+    <Content Include="Assets\Icons\settings.png" />
+    <Content Include="Assets\Icons\videocam.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

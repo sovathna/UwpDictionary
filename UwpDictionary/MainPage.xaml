@@ -24,7 +24,7 @@
             IsPaneToggleButtonVisible="False"
             IsSettingsVisible="False"
             PaneDisplayMode="Left"
-            IsBackEnabled="True"
+            IsBackEnabled="False"
             OpenPaneLength="220">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem
@@ -33,9 +33,8 @@
                     x:Uid="HomeNavItem"
                     Tag="home">
                     <ui:NavigationViewItem.Icon>
-                        <FontIcon
-                            FontFamily="{StaticResource IconFont}"
-                            Glyph="&#xe80f;" />
+                        <ui:ImageIcon
+                            Source="ms-appx:///Assets/Icons/home.png" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem
@@ -44,9 +43,8 @@
                     x:Uid="HistoryNavItem"
                     Tag="history">
                     <ui:NavigationViewItem.Icon>
-                        <FontIcon
-                            FontFamily="{StaticResource IconFont}"
-                            Glyph="&#xe81c;" />
+                        <ui:ImageIcon
+                            Source="ms-appx:///Assets/Icons/history.png" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem
@@ -55,9 +53,8 @@
                     x:Uid="BookmarkNavItem"
                     Tag="bookmark">
                     <ui:NavigationViewItem.Icon>
-                        <FontIcon
-                            FontFamily="{StaticResource IconFont}"
-                            Glyph="&#xe8a4;" />
+                        <ui:ImageIcon
+                            Source="ms-appx:///Assets/Icons/bookmarks.png" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
@@ -69,9 +66,8 @@
                     x:Uid="VideoAdNavItem"
                     Tag="video_ad">
                     <ui:NavigationViewItem.Icon>
-                        <FontIcon
-                            FontFamily="{StaticResource IconFont}"
-                            Glyph="&#xE714;" />
+                        <ui:ImageIcon
+                            Source="ms-appx:///Assets/Icons/videocam.png" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem
@@ -80,9 +76,8 @@
                     x:Uid="AboutNavItem"
                     Tag="about">
                     <ui:NavigationViewItem.Icon>
-                        <FontIcon
-                            FontFamily="{StaticResource IconFont}"
-                            Glyph="&#xe946;" />
+                        <ui:ImageIcon
+                            Source="ms-appx:///Assets/Icons/info.png" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem
@@ -91,9 +86,8 @@
                     x:Uid="SettingsNavItem"
                     Tag="settings">
                     <ui:NavigationViewItem.Icon>
-                        <FontIcon
-                            FontFamily="{StaticResource IconFont}"
-                            Glyph="&#xe713;" />
+                        <ui:ImageIcon
+                            Source="ms-appx:///Assets/Icons/settings.png" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
             </ui:NavigationView.FooterMenuItems>
