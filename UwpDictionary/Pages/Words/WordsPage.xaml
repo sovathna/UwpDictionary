@@ -6,7 +6,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:ui="using:Microsoft.UI.Xaml.Controls"
 	xmlns:root="using:UwpDictionary"
-	NavigationCacheMode="Enabled"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<root:BoolToVisibiliy
@@ -37,8 +36,9 @@
 					Height="*" />
 			</Grid.RowDefinitions>
 			<TextBox
+				
+                TextChanged="SearchTextBox_TextChanged"
 				FontSize="16"
-				TextChanged="SearchTextBox_TextChanged"
 				x:Uid="SearchTextBox"
 				x:Name="SearchTextBox"
 				FontFamily="{StaticResource AppFont}" />
@@ -71,11 +71,11 @@
 				FontSize="16"
 				FontFamily="{StaticResource AppFont}"
 				x:Uid="EmptyTextBlock"
-				Visibility="{x:Bind _viewModel.EmptyVisibility(_viewModel.WordCollection.Count,_viewModel.WordCollection.IsLoading), Mode=OneWay}" />
+                Visibility="{x:Bind _viewModel.EmptyVisibility(_viewModel.WordCollection.Count,_viewModel.WordCollection.IsLoading),FallbackValue=Collapsed, Mode=OneWay}" />
 			<ui:ProgressRing
 				Grid.Row="1"
 				IsIndeterminate="True"
-				Visibility="{x:Bind _viewModel.IsLoading(_viewModel.WordCollection.IsLoading), Mode=OneWay}" />
+                Visibility="{x:Bind _viewModel.IsLoading(_viewModel.WordCollection.IsLoading), FallbackValue=Collapsed, Mode=OneWay}" />
 		</Grid>
 
 		<Grid
@@ -100,6 +100,7 @@
 				Margin="0,16,32,0"
 				Click="Button_Click"
 				VerticalAlignment="Center"
+                Visibility="{x:Bind _viewModel.BookmarkBtnVisibility ,Mode=OneWay}"
 				HorizontalAlignment="Right">
 				<Grid>
 					<FontIcon
@@ -110,7 +111,7 @@
 						HorizontalAlignment="Center"
 						x:Name="BookmarkIcon"
 						FontFamily="{StaticResource IconFont}"
-						Glyph="&#xE734;" />
+						Glyph="{x:Bind _viewModel.BookmarkGlyph ,Mode=OneWay}" />
 				</Grid>
 			</Button>
 			<Border

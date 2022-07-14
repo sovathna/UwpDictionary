@@ -3,6 +3,7 @@ using UwpDictionary.Pages.About;
 using UwpDictionary.Pages.Settings;
 using UwpDictionary.Pages.Words;
 using VungleSDK;
+using Windows.ApplicationModel.Core;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
 
@@ -24,7 +25,8 @@ namespace UwpDictionary
 			InitializeComponent();
 			ContentFrame.Navigate(typeof(WordsPage));
 			NavView.SelectedItem = NavView.MenuItems[0];
-
+			//var titleBar = CoreApplication.GetCurrentView().TitleBar;
+			//titleBar.ExtendViewIntoTitleBar = true;
 		}
 
 		private void VungleAd_Diagnostic(object sender, DiagnosticLogEvent e)

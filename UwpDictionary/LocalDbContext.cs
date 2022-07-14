@@ -10,20 +10,9 @@ namespace UwpDictionary
 		public DbSet<History> Histories​ { get; set; }
 		public DbSet<Bookmark> Bookmarks { get; set; }
 
-		public LocalDbContext()
+		public LocalDbContext(DbContextOptions<LocalDbContext> options):base(options)
 		{
 			Database.EnsureCreated();
-		}
-
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			var dbPath = ApplicationData.Current.LocalFolder.Path + "/local.sqlite";
-			var connectionString = "Data Source=" + dbPath;
-			optionsBuilder
-				.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-				.EnableSensitiveDataLogging()
-				.EnableDetailedErrors()
-				.UseSqlite(connectionString);
 		}
 	}
 }
