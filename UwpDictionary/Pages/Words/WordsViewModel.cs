@@ -81,10 +81,7 @@ namespace UwpDictionary.Pages.Words
 			   {
 				   _ = _localContext.Histories.Remove(found);
 			   }
-
-			   var history = new History { WordId = _selected.Id, Value = _selected.Value };
-			   _ = await _localContext.Histories
-			   .AddAsync(history);
+			   _ = await _localContext.Histories.AddAsync(_selected.ToHistory());
 
 			   _ = await _localContext.SaveChangesAsync();
 		   }, _cancelTokenSource.Token);
@@ -106,9 +103,7 @@ namespace UwpDictionary.Pages.Words
 				}
 				else
 				{
-					var bookmark = new Bookmark { WordId = _selected.Id, Value = _selected.Value };
-					_ = await _localContext.Bookmarks
-					.AddAsync(bookmark);
+					_ = await _localContext.Bookmarks.AddAsync(_selected.ToBookmark());
 				}
 				_ = await _localContext.SaveChangesAsync();
 			}, _cancelTokenSource.Token);

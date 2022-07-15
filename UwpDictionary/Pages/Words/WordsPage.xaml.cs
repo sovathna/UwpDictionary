@@ -36,13 +36,11 @@ namespace UwpDictionary.Pages.Words
 	{
 		private readonly WordsViewModel _viewModel = App.Current.Services.GetRequiredService<WordsViewModel>();
 		protected abstract WordsType Type { get; }
-		private readonly Color _foregroundColor;
+		private readonly SolidColorBrush foregroundBrush;
 		public AbstractWordsPage()
 		{
 			InitializeComponent();
-
-			var uiSettings = new UISettings();
-			_foregroundColor = uiSettings.GetColorValue(UIColorType.Foreground);
+			foregroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
 			_viewModel.Search("", Type);
 			Loaded += AbstractWordsPage_Loaded;
 		}
@@ -97,7 +95,7 @@ namespace UwpDictionary.Pages.Words
 						hyperLink.SetValue(NameProperty, tmps[0]);
 						hyperLink.Click += HyperLink_Click;
 
-						hyperLink.Foreground = new SolidColorBrush(_foregroundColor);
+						hyperLink.Foreground = foregroundBrush;
 
 						hyperLink.Inlines.Add(run);
 						paragraph.Inlines.Add(hyperLink);
@@ -108,7 +106,7 @@ namespace UwpDictionary.Pages.Words
 						if (s1.Contains("[HI]"))
 						{
 							run.Text = s1.Replace("[HI]", "");
-							run.Foreground = new SolidColorBrush(Colors.Blue);
+							run.Foreground = new SolidColorBrush(Colors.CadetBlue);
 						}
 						else if (s1.Contains("[HI1]"))
 						{
@@ -118,7 +116,7 @@ namespace UwpDictionary.Pages.Words
 						else
 						{
 							run.Text = s1;
-							run.Foreground = new SolidColorBrush(_foregroundColor);
+							run.Foreground = foregroundBrush;
 						}
 						paragraph.Inlines.Add(run);
 					}

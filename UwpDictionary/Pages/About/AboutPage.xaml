@@ -1,43 +1,111 @@
 ﻿<Page
-    x:Class="UwpDictionary.Pages.About.AboutPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UwpDictionary.Pages.About"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    NavigationCacheMode="Enabled"
-  >
-    <Page.Resources>
-        <FontFamily x:Key="AppFont">Suwannaphum</FontFamily>
-        <FontFamily x:Key="IconFont">Segoe MDL2 Assets</FontFamily>
-    </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock 
-        Margin="32,16,32,0"
-                       FontSize="22"
-                       FontFamily="{StaticResource AppFont}"
-            x:Uid="AboutTextBlock" 
-               />
+	x:Class="UwpDictionary.Pages.About.AboutPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:UwpDictionary.Pages.About"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	NavigationCacheMode="Enabled">
+	<Page.Resources>
+		<FontFamily
+			x:Key="AppFont">Suwannaphum</FontFamily>
+		<FontFamily
+			x:Key="IconFont">Segoe MDL2 Assets</FontFamily>
+	</Page.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="*" />
+		</Grid.RowDefinitions>
+		<TextBlock
+			Margin="32,16,32,0"
+			Style="{StaticResource TitleTextBlockStyle}"
+			FontFamily="{StaticResource AppFont}"
+			x:Uid="AboutTextBlock" />
 
-        <Border 
-                Grid.Row="1"
+		<Border
+			Grid.Row="1"
 			Margin="16"
 			CornerRadius="8"
 			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid>
-                <ScrollViewer HorizontalScrollMode="Disabled" Padding="16">
-                    <TextBlock 
-                       FontSize="16"
-                       FontFamily="{StaticResource AppFont}"
-            x:Uid="AboutTextBlock" 
-               />
-                </ScrollViewer>
-            </Grid>
-        </Border>
-    </Grid>
+			<Grid>
+				<ScrollViewer
+					HorizontalScrollMode="Disabled"
+					Padding="16">
+					<StackPanel
+						Orientation="Vertical">
+						<TextBlock
+							Margin="16"
+							TextAlignment="Center"
+							Style="{StaticResource SubtitleTextBlockStyle}"
+							FontFamily="{StaticResource AppFont}"
+							x:Uid="About1" />
+						<TextBlock
+							Margin="16"
+							TextAlignment="Center"
+							Style="{StaticResource BodyTextBlockStyle}"
+							FontFamily="{StaticResource AppFont}"
+							x:Uid="About2" />
+						<Button
+							Tag="ButtonDeveloper"
+							Click="Button_Click"
+							FontFamily="{StaticResource AppFont}"
+							Margin="32,32,32,0"
+							HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center">
+
+							<Grid >
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition
+										Width="Auto" />
+									<ColumnDefinition
+										Width="*" />
+								</Grid.ColumnDefinitions>
+								<FontIcon
+									Margin="0,0,10,0"
+									FontFamily="{StaticResource IconFont}"
+									Glyph="&#xE71B;" />
+								<TextBlock
+									Grid.Column="1"
+									x:Uid="About3" />
+							</Grid>
+						</Button>
+						<Button
+							Tag="ButtonSourceCode"
+							Click="Button_Click"
+							FontFamily="{StaticResource AppFont}"
+							Margin="32,16,32,32"
+							HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center">
+
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition
+										Width="Auto" />
+									<ColumnDefinition
+										Width="*" />
+									<ColumnDefinition
+										Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<FontIcon
+									Margin="0,0,10,0"
+									FontFamily="{StaticResource IconFont}"
+									Glyph="&#xE71B;" />
+								<TextBlock
+									Grid.Column="1"
+									x:Uid="About4" />
+								<Image
+									Grid.Column="2"
+									Height="28"
+									Source="ms-appx:///Assets/GitHub_Logo.png" />
+							</Grid>
+						</Button>
+					</StackPanel>
+				</ScrollViewer>
+			</Grid>
+		</Border>
+	</Grid>
 </Page>

@@ -13,5 +13,18 @@ namespace UwpDictionary.Pages.About
 		{
 			this.InitializeComponent();
 		}
+
+		private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		{
+			var button = (Button)sender;
+			if (button.Tag.ToString() == "ButtonDeveloper")
+			{
+				_ = Windows.System.Launcher.LaunchUriAsync(new System.Uri(@"https://sovathna.github.io/"));
+			}
+			else if (button.Tag.ToString() == "ButtonSourceCode")
+			{
+				_ = Windows.System.Launcher.LaunchUriAsync(new System.Uri(@"https://github.com/sovathna/Khmer-Dictionary/"));
+			}
+		}
 	}
 }

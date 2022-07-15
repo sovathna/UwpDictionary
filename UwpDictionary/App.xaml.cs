@@ -11,6 +11,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.System;
@@ -73,7 +74,6 @@ namespace UwpDictionary
 
 			InitializeComponent();
 			Suspending += OnSuspending;
-
 		}
 
 		/// <summary>
@@ -84,7 +84,6 @@ namespace UwpDictionary
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
 			InitNotificationsAsync();
-			InitBackgroundTaskAsync();
 			OnLaunchedOrActivated(e);
 		}
 
@@ -115,55 +114,12 @@ namespace UwpDictionary
 		private async void InitNotificationsAsync()
 		{
 			var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-			var hubName = "io.github.sovathna.khmerdictionary";
-			var connectionString = "Endpoint=sb://io-github-sovathna-khmerdictionary.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=tvaFPqxshjUYwEjsUa/o2ubTwH/8bIYozlJdGQqJEso=";
-			var hub = new NotificationHub(hubName, connectionString);
 			Debug.WriteLine(channel.Uri.ToString());
-			await hub.RegisterNativeAsync(channel.Uri);
-		}
-
-
-
-		private async void InitBackgroundTaskAsync()
-		{
-			var taskName = "AppBackgroundTask";
-			var isTaskRunning = false;
-			foreach (var task in BackgroundTaskRegistration.AllTasks)
-			{
-				if (task.Value.Name == taskName)
-				{
-					isTaskRunning = true;
-					break;
-				}
-			}
-			if (!isTaskRunning)
-			{
-				var accessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-				if (accessStatus != BackgroundAccessStatus.Unspecified && accessStatus != BackgroundAccessStatus.DeniedByUser && accessStatus != BackgroundAccessStatus.DeniedBySystemPolicy)
-				{
-					var builder = new BackgroundTaskBuilder();
-					var pushTrigger = new PushNotificationTrigger();
-					var actionTrigger = new ToastNotificationActionTrigger();
-					builder.SetTrigger(pushTrigger);
-					builder.SetTrigger(actionTrigger);
-					builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
-					builder.Name = taskName;
-					_ = builder.Register();
-				}
-			}
 		}
 
 		protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
 		{
-			if (args.TaskInstance.TriggerDetails is RawNotification notification)
-			{
-				new ToastContentBuilder()
-					.AddArgument("action", "viewConversation")
-					.AddText(notification.Content)
-					.AddText("test text")
-					.Show();
-			}
-			else if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail detail)
+			if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail detail)
 			{
 				Debug.WriteLine($"OnBackgroundActivated {detail.Argument}");
 			}
@@ -182,12 +138,12 @@ namespace UwpDictionary
 				Debug.WriteLine($"OnLaunchedOrActivated {tmp.Argument}");
 			}
 
-			Frame rootFrame = Window.Current.Content as Frame;
+			var rootFrame = (Frame)Window.Current.Content;
 
 			if (rootFrame == null)
 			{
 				rootFrame = new Frame();
-				rootFrame.Background =new SolidColorBrush(Colors.Magenta);
+				rootFrame.Background = new SolidColorBrush(Colors.Magenta);
 
 				rootFrame.NavigationFailed += OnNavigationFailed;
 

@@ -7,6 +7,10 @@ namespace UwpDictionary
 	{
 		public int Id { get; set; }
 		public string Value { get; set; }
+
+		public History ToHistory()=> new History { WordId = Id, Value = Value };
+
+		public Bookmark ToBookmark() => new Bookmark { WordId = Id, Value = Value };
 	}
 
 	[Table("words")]
