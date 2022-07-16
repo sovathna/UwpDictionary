@@ -121,14 +121,15 @@
     <value>វចនានុក្រមខ្មែរ</value>
   </data>
   <data name="About2.Text" xml:space="preserve">
-    <value>ពុម្ពអក្សរប្រើប្រាស់៖ Suwannaphum
+    <value>ពុម្ពអក្សរប្រើប្រាស់
+Suwannaphum
 Designed by Danh Hong</value>
   </data>
   <data name="About3.Text" xml:space="preserve">
-    <value>អភិវឌ្ឍកម្មវិធី៖ ហុង សុវឌ្ឍនា</value>
+    <value>អភិវឌ្ឍកម្មវិធីដោយ ហុង សុវឌ្ឍនា</value>
   </data>
   <data name="About4.Text" xml:space="preserve">
-    <value>Source code on</value>
+    <value>កូដរបស់កម្មវិធីនេះមាននៅលើ GitHub</value>
   </data>
   <data name="AboutNavItem.Content" xml:space="preserve">
     <value>អំពីកម្មវិធី</value>
@@ -151,6 +152,15 @@ Designed by Danh Hong</value>
   <data name="HomeNavItem.Content" xml:space="preserve">
     <value>វចនានុក្រមខ្មែរ</value>
   </data>
+  <data name="RadioThemeDark.Content" xml:space="preserve">
+    <value>ផ្ទៃងងឹត</value>
+  </data>
+  <data name="RadioThemeLight.Content" xml:space="preserve">
+    <value>ផ្ទៃភ្លឺ</value>
+  </data>
+  <data name="RadioThemeSystem.Content" xml:space="preserve">
+    <value>ផ្ទៃរបស់ប្រព័ន្ធ</value>
+  </data>
   <data name="SearchTextBox.PlaceholderText" xml:space="preserve">
     <value>ស្វែងរកពាក្យ</value>
   </data>
@@ -159,6 +169,18 @@ Designed by Danh Hong</value>
   </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
     <value>ការកំណត់</value>
+  </data>
+  <data name="TextBlockTextSize.Text" xml:space="preserve">
+    <value>ទំហំអក្សរពន្យល់ន័យ</value>
+  </data>
+  <data name="TextBlockTheme.Text" xml:space="preserve">
+    <value>ពណ៌ផ្ទៃ</value>
+  </data>
+  <data name="TextSizeEx.Text" xml:space="preserve">
+    <value>ភាសាខ្មែរ</value>
+  </data>
+  <data name="VersionNavItem.Content" xml:space="preserve">
+    <value>វចនានុក្រមខ្មែរ ជំនាន់ ១.០.០</value>
   </data>
   <data name="VideoAdNavItem.Content" xml:space="preserve">
     <value>មើលវីដេអូពាណិជ្ជកម្ម</value>

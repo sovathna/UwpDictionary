@@ -1,14 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using Windows.System;
 using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
+using Microsoft.Extensions.DependencyInjection;
+using Windows.Storage;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -16,17 +15,23 @@ namespace UwpDictionary.Pages.Words
 {
 	public sealed class HistoriesPage : AbstractWordsPage
 	{
-		protected override WordsType Type => WordsType.HISTORY;
+		public HistoriesPage() : base(WordsType.HISTORY)
+		{
+		}
 	}
 
 	public sealed class BookmarksPage : AbstractWordsPage
 	{
-		protected override WordsType Type => WordsType.BOOKMARK;
+		public BookmarksPage() : base(WordsType.BOOKMARK)
+		{
+		}
 	}
 
 	public sealed class WordsPage : AbstractWordsPage
 	{
-		protected override WordsType Type => WordsType.HOME;
+		public WordsPage() : base(WordsType.HOME)
+		{
+		}
 	}
 
 	/// <summary>
@@ -35,23 +40,35 @@ namespace UwpDictionary.Pages.Words
 	public abstract partial class AbstractWordsPage : Page
 	{
 		private readonly WordsViewModel _viewModel = App.Current.Services.GetRequiredService<WordsViewModel>();
-		protected abstract WordsType Type { get; }
-		private readonly SolidColorBrush foregroundBrush;
-		public AbstractWordsPage()
+		private readonly WordsType _type;
+		private readonly ApplicationDataContainer _settings = ApplicationData.Current.LocalSettings;
+
+		protected AbstractWordsPage(WordsType type)
 		{
+			_type = type;
 			InitializeComponent();
-			foregroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
-			_viewModel.Search("", Type);
+			_viewModel.Search("", type);
 			Loaded += AbstractWordsPage_Loaded;
 		}
 
+
 		private void AbstractWordsPage_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (Type != WordsType.HOME)
+			var size = (double?)_settings.Values["SettingsTextSize"] ?? 14;
+			if (size != DefTextBlock.FontSize)
 			{
-				if (_viewModel.WordCollection != null)
-					_viewModel.WordCollection.RefreshAsync();
+				DefTextBlock.FontSize = (double?)_settings.Values["SettingsTextSize"] ?? 14;
 			}
+
+			_viewModel.RefreshSelected(word =>
+			{
+				WordTextBlock.Text = word.Value;
+				DefTextBlock.Blocks.Clear();
+				SetDefinition(word);
+			});
+
+			if (_type != WordsType.HOME)
+				_viewModel.WordCollection?.RefreshAsync();
 		}
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -62,9 +79,8 @@ namespace UwpDictionary.Pages.Words
 
 		private void SelectItem(int id)
 		{
-			DispatcherQueue.GetForCurrentThread().TryEnqueue(async () =>
+			_viewModel.SetSelected(id, word =>
 			{
-				var word = await _viewModel.SetSelected(id);
 				WordTextBlock.Text = word.Value;
 				DefTextBlock.Blocks.Clear();
 				SetDefinition(word);
@@ -73,29 +89,32 @@ namespace UwpDictionary.Pages.Words
 
 		private void SetDefinition(Word word)
 		{
-			foreach (var s in word.Definition.Split("[NewLine]"))
+			foreach (var s in word.Definition.Replace("ឧទាហរណ៍", "ឧ.").Split("[NewLine]"))
 			{
-				var paragraph = new Paragraph();
-
-				paragraph.Margin = new Thickness
+				var paragraph = new Paragraph
 				{
-					Bottom = 32
+					Margin = new Thickness
+					{
+						Bottom = 32
+					}
 				};
+
 				foreach (var s1 in s.Split("[]"))
-				{
 					if (s1.Contains('|'))
 					{
 						var tmps = s1.Split("|");
-						var run = new Run();
-						run.Text = tmps[1];
+						var run = new Run
+						{
+							Text = tmps[1]
+						};
 						var hyperLink = new Hyperlink()
 						{
-							UnderlineStyle = UnderlineStyle.None,
+							UnderlineStyle = UnderlineStyle.None
 						};
 						hyperLink.SetValue(NameProperty, tmps[0]);
 						hyperLink.Click += HyperLink_Click;
 
-						hyperLink.Foreground = foregroundBrush;
+						hyperLink.Foreground = WordTextBlock.Foreground;
 
 						hyperLink.Inlines.Add(run);
 						paragraph.Inlines.Add(hyperLink);
@@ -106,7 +125,7 @@ namespace UwpDictionary.Pages.Words
 						if (s1.Contains("[HI]"))
 						{
 							run.Text = s1.Replace("[HI]", "");
-							run.Foreground = new SolidColorBrush(Colors.CadetBlue);
+							run.Foreground = WordTextBlock.Foreground;
 						}
 						else if (s1.Contains("[HI1]"))
 						{
@@ -116,11 +135,12 @@ namespace UwpDictionary.Pages.Words
 						else
 						{
 							run.Text = s1;
-							run.Foreground = foregroundBrush;
+							run.Foreground = WordTextBlock.Foreground;
 						}
+
 						paragraph.Inlines.Add(run);
 					}
-				}
+
 				DefTextBlock.Blocks.Add(paragraph);
 			}
 		}
@@ -141,7 +161,7 @@ namespace UwpDictionary.Pages.Words
 		private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			var searchTextBox = (TextBox)sender;
-			_viewModel.Search(searchTextBox.Text, Type);
+			_viewModel.Search(searchTextBox.Text, _type);
 		}
 	}
 }

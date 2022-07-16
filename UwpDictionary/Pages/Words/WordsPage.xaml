@@ -1,130 +1,145 @@
 ﻿<Page
-    x:Class="UwpDictionary.Pages.Words.AbstractWordsPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="using:Microsoft.UI.Xaml.Controls"
-    NavigationCacheMode="Enabled"
-    xmlns:root="using:UwpDictionary"
-    mc:Ignorable="d">
-    <Page.Resources>
-        <root:BoolToVisibiliy
-            x:Key="boolToVisibility" />
-        <root:IntToVisibiliy
-            x:Key="intToVisibility" />
-        <FontFamily
-            x:Key="IconFont">Segoe MDL2 Assets</FontFamily>
-        <FontFamily
-            x:Key="AppFont">Suwannaphum</FontFamily>
-    </Page.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="Auto" />
-            <ColumnDefinition
-                Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid
-            Margin="16,16,0,16">
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="*" />
-            </Grid.RowDefinitions>
-            <TextBox
-                TextChanged="SearchTextBox_TextChanged"
-                FontSize="16"
-                x:Uid="SearchTextBox"
-                x:Name="SearchTextBox"
-                FontFamily="{StaticResource AppFont}" />
-            <Border
-                Margin="0,16,0,0"
-                Grid.Row="1"
-                Width="200"
-                CornerRadius="8"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <ListView
-                    x:Name="WordListView"
-                    IsItemClickEnabled="True"
-                    ItemClick="ListView_ItemClick"
-                    ItemsSource="{x:Bind _viewModel.WordCollection, Mode=OneWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate
-                            x:DataType="root:WordUi">
-                            <TextBlock
-                                FontSize="16"
-                                Text="{Binding Value, Mode=OneWay}"
-                                FontFamily="{StaticResource AppFont}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Border>
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Grid.Row="1"
-                FontSize="16"
-                FontFamily="{StaticResource AppFont}"
-                x:Uid="EmptyTextBlock"
-                Visibility="{x:Bind _viewModel.EmptyVisibility(_viewModel.WordCollection.Count,_viewModel.WordCollection.IsLoading),FallbackValue=Collapsed, Mode=OneWay}" />
-            <ui:ProgressRing
-                Grid.Row="1"
-                IsIndeterminate="True"
-                Visibility="{x:Bind _viewModel.IsLoading(_viewModel.WordCollection.IsLoading), FallbackValue=Collapsed, Mode=OneWay}" />
-        </Grid>
-        <Grid
-            Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="*" />
-            </Grid.RowDefinitions>
-            <TextBlock
-                x:Name="WordTextBlock"
-                Margin="32,16,32,0"
-                FontSize="22"
-                FontFamily="{StaticResource AppFont}" />
-            <Button
-                Width="Auto"
-                Height="Auto"
-                CornerRadius="21"
-                Padding="0"
-				Foreground="AliceBlue"
-                x:Name="BookmarkButton"
-                Margin="0,16,32,0"
-                Click="Button_Click"
-                VerticalAlignment="Center"
-                Visibility="{x:Bind _viewModel.BookmarkBtnVisibility ,Mode=OneWay}"
-                HorizontalAlignment="Right">
-                <Grid>
-                    <BitmapIcon
-						Foreground="{ThemeResource DefaultTextForegroundThemeBrush}"
-                        Width="18"
-                        Height="18"
-                        Margin="12"
-                        x:Name="BookmarkIcon"
-                        UriSource="{x:Bind _viewModel.BookmarkGlyph ,Mode=OneWay}" />
-                </Grid>
-            </Button>
-            <Border
-                Grid.Row="1"
-                Margin="16"
-                CornerRadius="8"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid>
-                    <ScrollViewer
-                        HorizontalScrollMode="Disabled">
-                        <RichTextBlock
-                            FontSize="16"
-                            Margin="16"
-                            x:Name="DefTextBlock"
-                            FontFamily="{StaticResource AppFont}" />
-                    </ScrollViewer>
-                </Grid>
-            </Border>
-        </Grid>
-    </Grid>
+	x:Class="UwpDictionary.Pages.Words.AbstractWordsPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ui="using:Microsoft.UI.Xaml.Controls"
+	xmlns:proj="using:UwpDictionary"
+	NavigationCacheMode="Enabled"
+	xmlns:root="using:UwpDictionary"
+	mc:Ignorable="d">
+	<Page.Resources>
+		<proj:IntToVisibiliy
+			x:Key="intToVisibility" />
+		<FontFamily
+			x:Key="AppFont">
+			Suwannaphum
+		</FontFamily>
+		<!--<Style TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter
+                            SelectedBackground="Bisque"
+                            />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+	</Page.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="Auto" />
+			<RowDefinition
+				Height="*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="Auto" />
+			<ColumnDefinition
+				Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<Grid
+			Margin="16,16,16,0"
+			Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition
+					Width="Auto" />
+				<ColumnDefinition
+					Width="*" />
+				<ColumnDefinition
+					Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBox
+				TextChanged="SearchTextBox_TextChanged"
+				x:Uid="SearchTextBox"
+				VerticalAlignment="Center"
+				Width="200"
+				FontFamily="{StaticResource AppFont}" />
+			<TextBlock
+				Margin="32,0,16,0"
+				VerticalAlignment="Center"
+				Grid.Column="1"
+				x:Name="WordTextBlock"
+				FontSize="22"
+				Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+				FontFamily="{StaticResource AppFont}" />
+			<Button
+				Grid.Column="2"
+				CornerRadius="21"
+				Padding="0"
+				Margin="0,0,16,0"
+				Click="Button_Click"
+				VerticalAlignment="Center"
+				Visibility="{x:Bind _viewModel.BookmarkBtnVisibility ,Mode=OneWay}">
+				<BitmapIcon
+					Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+					Width="16"
+					Height="16"
+					Margin="8"
+					UriSource="{x:Bind _viewModel.BookmarkIcon ,Mode=OneWay}" />
+			</Button>
+
+		</Grid>
+
+		<Grid
+			Grid.Column="0"
+			Grid.Row="1"
+			Margin="16,16,0,16">
+			<Border
+				Width="200"
+				CornerRadius="8"
+				Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+				<ListView
+					x:Name="WordListView"
+					IsItemClickEnabled="True"
+					ItemClick="ListView_ItemClick"
+					ItemsSource="{x:Bind _viewModel.WordCollection, Mode=OneWay}">
+					<ListView.ItemTemplate>
+						<DataTemplate
+							x:DataType="root:WordUi">
+							<TextBlock
+								Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+								Text="{Binding Value, Mode=OneWay}"
+								FontFamily="{StaticResource AppFont}" />
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</Border>
+			<TextBlock
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+				FontFamily="{StaticResource AppFont}"
+				x:Uid="EmptyTextBlock"
+				Visibility="{x:Bind _viewModel.EmptyVisibility(_viewModel.WordCollection.Count,_viewModel.WordCollection.IsLoading),FallbackValue=Collapsed, Mode=OneWay}" />
+			<ui:ProgressRing
+				IsActive="{x:Bind _viewModel.WordCollection.IsLoading,FallbackValue=False, Mode=OneWay}"
+				IsIndeterminate="True" />
+		</Grid>
+
+		<Border
+			Grid.Row="1"
+			Grid.Column="1"
+			Margin="16"
+			CornerRadius="8"
+			Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+			<ScrollViewer
+				HorizontalScrollMode="Disabled">
+				<RichTextBlock
+					Margin="16"
+					FontSize="14"
+					Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+					x:Name="DefTextBlock"
+					FontFamily="{StaticResource AppFont}" />
+			</ScrollViewer>
+		</Border>
+
+
+	
+	</Grid>
+
 </Page>

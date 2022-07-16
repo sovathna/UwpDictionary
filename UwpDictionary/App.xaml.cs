@@ -2,24 +2,18 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Toolkit.Uwp.Notifications;
-using Microsoft.WindowsAzure.Messaging;
+using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
 using System.Diagnostics;
 using UwpDictionary.Pages.Words;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Networking.PushNotifications;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace UwpDictionary
@@ -39,11 +33,27 @@ namespace UwpDictionary
 		/// </summary>
 		public App()
 		{
+			var settings = ApplicationData.Current.LocalSettings;
+			var tag = settings.Values["SettingsTheme"] ?? "RadioThemeSystem";
+			switch (tag)
+			{
+				case "RadioThemeSystem":
+						Current.RequestedTheme = Application.Current.RequestedTheme;
+					break;
+				case "RadioThemeLight":
+					Current.RequestedTheme = ApplicationTheme.Light;
+				
+					break;
+				case "RadioThemeDark":
+					Current.RequestedTheme = ApplicationTheme.Dark;
+			
+					break;
+			}
+
 			var host = new HostBuilder()
 				.ConfigureServices(
 					(_, services) => services
 						.AddSingleton(DispatcherQueue.GetForCurrentThread())
-
 						.AddDbContextPool<WordsDbContext>(options =>
 						{
 							var dbPath = Package.Current.InstalledPath + "/Assets/Databases/khdict.sqlite";
@@ -65,7 +75,6 @@ namespace UwpDictionary
 								.UseSqlite(connectionString);
 						})
 						.AddDbContext<LocalDbContext>()
-
 						.AddTransient<WordsViewModel>()
 				)
 				.Build();
@@ -73,7 +82,9 @@ namespace UwpDictionary
 			Services = host.Services;
 
 			InitializeComponent();
-			Suspending += OnSuspending;
+
+
+			//Suspending += OnSuspending;
 		}
 
 		/// <summary>
@@ -83,7 +94,7 @@ namespace UwpDictionary
 		/// <param name="e">Details about the launch request and process.</param>
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			InitNotificationsAsync();
+			//InitNotificationsAsync();
 			OnLaunchedOrActivated(e);
 		}
 
@@ -92,10 +103,10 @@ namespace UwpDictionary
 		/// </summary>
 		/// <param name="sender">The Frame which failed navigation</param>
 		/// <param name="e">Details about the navigation failure</param>
-		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-		{
-			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-		}
+		//private static void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+		//{
+		//	throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+		//}
 
 		/// <summary>
 		/// Invoked when application execution is being suspended.  Application state is saved
@@ -104,26 +115,28 @@ namespace UwpDictionary
 		/// </summary>
 		/// <param name="sender">The source of the suspend request.</param>
 		/// <param name="e">Details about the suspend request.</param>
-		private void OnSuspending(object sender, SuspendingEventArgs e)
-		{
-			var deferral = e.SuspendingOperation.GetDeferral();
-			//TODO: Save application state and stop any background activity
-			deferral.Complete();
-		}
+		//private static void OnSuspending(object sender, SuspendingEventArgs e)
+		//{
+		//	var deferral = e.SuspendingOperation.GetDeferral();
+		//	//TODO: Save application state and stop any background activity
+		//	deferral.Complete();
+		//}
 
-		private async void InitNotificationsAsync()
-		{
-			var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-			Debug.WriteLine(channel.Uri.ToString());
-		}
+		//private static void InitNotificationsAsync()
+		//{
+		//	Task.Run(async () =>
+		//   {
+		//	   var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+		//	   Debug.WriteLine(channel.Uri);
+		//   });
 
-		protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
-		{
-			if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail detail)
-			{
-				Debug.WriteLine($"OnBackgroundActivated {detail.Argument}");
-			}
-		}
+		//}
+
+		//protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+		//{
+		//	if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail detail)
+		//		Debug.WriteLine($"OnBackgroundActivated {detail.Argument}");
+		//}
 
 		protected override void OnActivated(IActivatedEventArgs e)
 		{
@@ -132,57 +145,50 @@ namespace UwpDictionary
 
 		private void OnLaunchedOrActivated(IActivatedEventArgs eventArgs)
 		{
-			if (eventArgs is ToastNotificationActivatedEventArgs tmp)
-			{
-				var args = ToastArguments.Parse(tmp.Argument);
-				Debug.WriteLine($"OnLaunchedOrActivated {tmp.Argument}");
-			}
+			//if (eventArgs is ToastNotificationActivatedEventArgs tmp)
+			//{
+			//	var args = ToastArguments.Parse(tmp.Argument);
+			//	Debug.WriteLine($"OnLaunchedOrActivated {tmp.Argument}");
+			//}
 
 			var rootFrame = (Frame)Window.Current.Content;
 
 			if (rootFrame == null)
 			{
 				rootFrame = new Frame();
-				rootFrame.Background = new SolidColorBrush(Colors.Magenta);
+				//rootFrame.NavigationFailed += OnNavigationFailed;
 
-				rootFrame.NavigationFailed += OnNavigationFailed;
+				//if (eventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
+				//{
+				//	//TODO: Load state from previously suspended application
+				//}
 
-				if (eventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
-				{
-					//TODO: Load state from previously suspended application
-				}
 				Window.Current.Content = rootFrame;
 			}
 
 			if (eventArgs is LaunchActivatedEventArgs e)
 			{
-				if (e.PrelaunchActivated == false)
-				{
-					TryEnablePrelaunch();
-					if (rootFrame.Content == null)
-					{
-						rootFrame.Navigate(typeof(MainPage), e.Arguments);
-					}
-					Window.Current.Activate();
-				}
+				if (e.PrelaunchActivated)
+					return;
+				TryEnablePreLaunch();
+				//if (rootFrame.Content == null)
+				//	rootFrame.Navigate(typeof(MainPage), e.Arguments);
 			}
-			else
+
+			if (rootFrame.Content == null)
 			{
-				if (rootFrame.Content == null)
-				{
-					rootFrame.Navigate(typeof(MainPage));
-				}
-				Window.Current.Activate();
+				rootFrame.Navigate(typeof(MainPage));
 			}
+			Window.Current.Activate();
 		}
 
-		private void TryEnablePrelaunch()
+		private static void TryEnablePreLaunch()
 		{
-			bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
-			if (canEnablePrelaunch)
-			{
-				Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
-			}
+			var canEnablePreLaunch =
+				ApiInformation.IsMethodPresent(
+					"Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
+			if (canEnablePreLaunch)
+				CoreApplication.EnablePrelaunch(true);
 		}
 	}
 }
