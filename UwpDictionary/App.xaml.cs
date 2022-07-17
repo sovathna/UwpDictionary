@@ -2,9 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Toolkit.Uwp.UI.Helpers;
 using System;
-using System.Diagnostics;
 using UwpDictionary.Pages.Words;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -14,7 +12,6 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace UwpDictionary
 {
@@ -24,6 +21,7 @@ namespace UwpDictionary
 	public sealed partial class App : Application
 	{
 		public new static App Current => (App)Application.Current;
+		public readonly ApplicationTheme SystemTheme;
 
 		public IServiceProvider Services { get; }
 
@@ -33,20 +31,19 @@ namespace UwpDictionary
 		/// </summary>
 		public App()
 		{
+			SystemTheme = Application.Current.RequestedTheme;
 			var settings = ApplicationData.Current.LocalSettings;
 			var tag = settings.Values["SettingsTheme"] ?? "RadioThemeSystem";
 			switch (tag)
 			{
 				case "RadioThemeSystem":
-						Current.RequestedTheme = Application.Current.RequestedTheme;
+					Current.RequestedTheme = Application.Current.RequestedTheme;
 					break;
 				case "RadioThemeLight":
 					Current.RequestedTheme = ApplicationTheme.Light;
-				
 					break;
 				case "RadioThemeDark":
 					Current.RequestedTheme = ApplicationTheme.Dark;
-			
 					break;
 			}
 
@@ -59,20 +56,24 @@ namespace UwpDictionary
 							var dbPath = Package.Current.InstalledPath + "/Assets/Databases/khdict.sqlite";
 							var connectionString = "Data Source=" + dbPath;
 							options
-								.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-								.EnableSensitiveDataLogging()
-								.EnableDetailedErrors()
 								.UseSqlite(connectionString);
+#if DEBUG
+							options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
+								.EnableSensitiveDataLogging()
+								.EnableDetailedErrors();
+#endif
 						})
 						.AddDbContextPool<LocalDbContext>(options =>
 						{
 							var dbPath = ApplicationData.Current.LocalFolder.Path + "/local.sqlite";
 							var connectionString = "Data Source=" + dbPath;
 							options
-								.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-								.EnableSensitiveDataLogging()
-								.EnableDetailedErrors()
 								.UseSqlite(connectionString);
+#if DEBUG
+							options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
+								.EnableSensitiveDataLogging()
+								.EnableDetailedErrors();
+#endif
 						})
 						.AddDbContext<LocalDbContext>()
 						.AddTransient<WordsViewModel>()

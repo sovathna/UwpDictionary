@@ -76,7 +76,7 @@
 				VerticalAlignment="Center"
 				Visibility="{x:Bind _viewModel.BookmarkBtnVisibility ,Mode=OneWay}">
 				<BitmapIcon
-					Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+					Foreground="{ThemeResource SystemColorControlAccentBrush}"
 					Width="16"
 					Height="16"
 					Margin="8"

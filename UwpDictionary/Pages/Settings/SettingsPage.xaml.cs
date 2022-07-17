@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Windows.Storage;
+﻿using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -7,18 +6,18 @@ using Windows.UI.Xaml.Controls;
 
 namespace UwpDictionary.Pages.Settings
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class SettingsPage : Page
-    {
+	/// <summary>
+	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class SettingsPage : Page
+	{
 
 		private readonly ApplicationDataContainer _settings;
 
-        public SettingsPage()
-        {
-            InitializeComponent();
-			
+		public SettingsPage()
+		{
+			InitializeComponent();
+
 			_settings = ApplicationData.Current.LocalSettings;
 			var tag = _settings.Values["SettingsTheme"] ?? "RadioThemeSystem";
 			switch (tag)
@@ -33,7 +32,7 @@ namespace UwpDictionary.Pages.Settings
 					RadioThemeDark.IsChecked = true;
 					break;
 			}
-			var textSize = (double?)_settings.Values["SettingsTextSize"] ??14;
+			var textSize = (double?)_settings.Values["SettingsTextSize"] ?? 14;
 			SliderTextSize.ValueChanged += Slider_ValueChanged;
 			SliderTextSize.Value = textSize;
 		}
@@ -44,7 +43,7 @@ namespace UwpDictionary.Pages.Settings
 			switch (radio.Tag.ToString())
 			{
 				case "RadioThemeSystem":
-					if (Application.Current.RequestedTheme == ApplicationTheme.Light)
+					if (App.Current.SystemTheme == ApplicationTheme.Light)
 					{
 						((Frame)Window.Current.Content).RequestedTheme = ElementTheme.Light;
 					}
@@ -64,8 +63,6 @@ namespace UwpDictionary.Pages.Settings
 			{
 				_settings.Values["SettingsTheme"] = radio.Tag.ToString();
 			}
-			
-			Debug.WriteLine($"selected {radio.Tag}");
 		}
 
 		private void Slider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)

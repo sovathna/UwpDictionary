@@ -1,13 +1,11 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
-using Microsoft.Extensions.DependencyInjection;
-using Windows.Storage;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -79,7 +77,7 @@ namespace UwpDictionary.Pages.Words
 
 		private void SelectItem(int id)
 		{
-			_viewModel.SetSelected(id, word =>
+			_viewModel.SetSelected(id, true, word =>
 			{
 				WordTextBlock.Text = word.Value;
 				DefTextBlock.Blocks.Clear();
@@ -149,7 +147,6 @@ namespace UwpDictionary.Pages.Words
 		private void HyperLink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
 		{
 			WordListView.SelectedItem = null;
-			Debug.WriteLine(sender.Name);
 			SelectItem(int.Parse(sender.Name));
 		}
 

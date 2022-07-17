@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using UwpDictionary.Pages.About;
 using UwpDictionary.Pages.Settings;
 using UwpDictionary.Pages.Words;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -18,15 +15,15 @@ using Windows.UI.Xaml.Navigation;
 
 namespace UwpDictionary
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
-    {
-        private readonly CoreApplicationViewTitleBar _coreTitleBar;
-		private  ApplicationViewTitleBar _titleBar;
+	/// <summary>
+	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class MainPage : Page
+	{
+		private readonly CoreApplicationViewTitleBar _coreTitleBar;
+		private ApplicationViewTitleBar _titleBar;
 
-        public MainPage()
+		public MainPage()
 		{
 
 			InitializeComponent();
@@ -43,12 +40,12 @@ namespace UwpDictionary
 
 			Window.Current.SetTitleBar(TitleGrid);
 
-            ContentFrame.Navigate(typeof(WordsPage));
-            NavView.SelectedItem = NavView.MenuItems[0];
-            ContentFrame.Navigated += ContentFrame_Navigated;
+			ContentFrame.Navigate(typeof(WordsPage));
+			NavView.SelectedItem = NavView.MenuItems[0];
+			ContentFrame.Navigated += ContentFrame_Navigated;
 
-            SetNavigatedTitle();
-        }
+			SetNavigatedTitle();
+		}
 
 		private void MainPage_ActualThemeChanged(FrameworkElement sender, object args)
 		{
@@ -65,8 +62,8 @@ namespace UwpDictionary
 		}
 
 		private void Window_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            if (args.WindowActivationState == CoreWindowActivationState.Deactivated)
+		{
+			if (args.WindowActivationState == CoreWindowActivationState.Deactivated)
 			{
 				var settings = new UISettings();
 				AppTitleTextBlock.Foreground =
@@ -74,79 +71,80 @@ namespace UwpDictionary
 			}
 			else
 			{
-				AppTitleTextBlock.Foreground = new SolidColorBrush(ActualTheme == ElementTheme.Light ?Colors.Black:Colors.White);
+				AppTitleTextBlock.Foreground = new SolidColorBrush(ActualTheme == ElementTheme.Light ? Colors.Black : Colors.White);
 			}
-           
-        }
 
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            LeftPaddingColumn.Width = new GridLength(_coreTitleBar.SystemOverlayLeftInset);
-            RightPaddingColumn.Width = new GridLength(_coreTitleBar.SystemOverlayRightInset);
-        }
+		}
 
-        private void SetTitle(string title)
-        {
-            Debug.WriteLine($"Title {title}");
-            ApplicationView.GetForCurrentView().Title = title;
-            AppTitleTextBlock.Text = title;
-        }
+		private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+		{
+			LeftPaddingColumn.Width = new GridLength(_coreTitleBar.SystemOverlayLeftInset);
+			RightPaddingColumn.Width = new GridLength(_coreTitleBar.SystemOverlayRightInset);
+		}
 
-        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            NavView.IsBackEnabled = ContentFrame.CanGoBack;
-            if (ContentFrame.CurrentSourcePageType == typeof(WordsPage))
-                NavView.SelectedItem = NavView.MenuItems[0];
-            else if (ContentFrame.CurrentSourcePageType == typeof(HistoriesPage))
-                NavView.SelectedItem = NavView.MenuItems[1];
-            else if (ContentFrame.CurrentSourcePageType == typeof(BookmarksPage))
-                NavView.SelectedItem = NavView.MenuItems[2];
-            else if (ContentFrame.CurrentSourcePageType == typeof(AboutPage))
-                NavView.SelectedItem = NavView.FooterMenuItems[0];
-            else if (ContentFrame.CurrentSourcePageType == typeof(SettingsPage))
-                NavView.SelectedItem = NavView.FooterMenuItems[1];
-            SetNavigatedTitle();
-        }
+		private void SetTitle(string title)
+		{
+			ApplicationView.GetForCurrentView().Title = title;
+			AppTitleTextBlock.Text = title;
+		}
 
-        private void SetNavigatedTitle()
-        {
-            if (NavView.SelectedItem is Microsoft.UI.Xaml.Controls.NavigationViewItem item)
-                SetTitle(item.Content?.ToString());
-        }
+		private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+		{
+			NavView.IsBackEnabled = ContentFrame.CanGoBack;
+			if (ContentFrame.CurrentSourcePageType == typeof(WordsPage))
+				NavView.SelectedItem = NavView.MenuItems[0];
+			else if (ContentFrame.CurrentSourcePageType == typeof(HistoriesPage))
+				NavView.SelectedItem = NavView.MenuItems[1];
+			else if (ContentFrame.CurrentSourcePageType == typeof(BookmarksPage))
+				NavView.SelectedItem = NavView.MenuItems[2];
+			else if (ContentFrame.CurrentSourcePageType == typeof(AboutPage))
+				NavView.SelectedItem = NavView.FooterMenuItems[0];
+			else if (ContentFrame.CurrentSourcePageType == typeof(SettingsPage))
+				NavView.SelectedItem = NavView.FooterMenuItems[1];
+			SetNavigatedTitle();
+		}
 
-        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender,
-            Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
-        {
-            var tag = args.InvokedItemContainer.Tag.ToString();
-            switch (tag)
-            {
-                case "home":
-                    Navigate(typeof(WordsPage));
-                    break;
-                case "history":
-                    Navigate(typeof(HistoriesPage));
-                    break;
-                case "bookmark":
-                    Navigate(typeof(BookmarksPage));
-                    break;
-                case "about":
-                    Navigate(typeof(AboutPage));
-                    break;
-                case "settings":
-                    Navigate(typeof(SettingsPage));
-                    break;
-            }
-        }
+		private void SetNavigatedTitle()
+		{
+			if (NavView.SelectedItem is Microsoft.UI.Xaml.Controls.NavigationViewItem item)
+				SetTitle(item.Content?.ToString());
+		}
 
-        private void Navigate(Type pageType)
-        {
-            if (pageType != ContentFrame.CurrentSourcePageType) ContentFrame.Navigate(pageType);
-        }
+		private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender,
+			Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+		{
+			var tag = args.InvokedItemContainer.Tag.ToString();
+			switch (tag)
+			{
+				case "home":
+					Navigate(typeof(WordsPage));
+					break;
+				case "history":
+					Navigate(typeof(HistoriesPage));
+					break;
+				case "bookmark":
+					Navigate(typeof(BookmarksPage));
+					break;
+				case "about":
+					Navigate(typeof(AboutPage));
+					break;
+				case "settings":
+					Navigate(typeof(SettingsPage));
+					break;
+			}
+		}
 
-        private void NavView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender,
-            Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
-        {
-            if (ContentFrame.CanGoBack) ContentFrame.GoBack();
-        }
-    }
+		private void Navigate(Type pageType)
+		{
+			if (pageType != ContentFrame.CurrentSourcePageType)
+				ContentFrame.Navigate(pageType);
+		}
+
+		private void NavView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender,
+			Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+		{
+			if (ContentFrame.CanGoBack)
+				ContentFrame.GoBack();
+		}
+	}
 }

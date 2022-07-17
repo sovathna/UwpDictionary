@@ -2,12 +2,12 @@
 
 namespace UwpDictionary
 {
-    public sealed class WordsDbContext : DbContext
-    {
-        public WordsDbContext(DbContextOptions<WordsDbContext> options) : base(options)
-        {
-        }
+	public sealed class WordsDbContext : DbContext
+	{
+		public WordsDbContext(DbContextOptions<WordsDbContext> options) : base(options)
+		{
+		}
 
-        public DbSet<Word> Words { get; set; }
-    }
+		public DbSet<Word> Words { get; set; }
+	}
 }

@@ -8,8 +8,8 @@
 
     <Identity
             Name="5940SATYAMOBILE.KhmerDictionary"
-            Publisher="CN=5035C1AC-5BB2-4A8E-980E-57262712BC0B"
-            Version="1.0.0.0"/>
+            Publisher="CN=Sovathna Hong"
+            Version="1.0.3.0"/>
 
     <mp:PhoneIdentity PhoneProductId="f20d6ef9-000f-40fc-8a48-8a648614ec29"
                       PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
