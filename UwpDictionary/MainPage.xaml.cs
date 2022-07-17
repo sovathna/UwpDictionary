@@ -40,7 +40,9 @@ namespace UwpDictionary
 
 			Window.Current.SetTitleBar(TitleGrid);
 
+
 			ContentFrame.Navigate(typeof(WordsPage));
+
 			NavView.SelectedItem = NavView.MenuItems[0];
 			ContentFrame.Navigated += ContentFrame_Navigated;
 

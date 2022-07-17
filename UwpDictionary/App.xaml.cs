@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using UwpDictionary.Pages.Words;
@@ -47,40 +46,39 @@ namespace UwpDictionary
 					break;
 			}
 
-			var host = new HostBuilder()
-				.ConfigureServices(
-					(_, services) => services
-						.AddSingleton(DispatcherQueue.GetForCurrentThread())
-						.AddDbContextPool<WordsDbContext>(options =>
-						{
-							var dbPath = Package.Current.InstalledPath + "/Assets/Databases/khdict.sqlite";
-							var connectionString = "Data Source=" + dbPath;
-							options
-								.UseSqlite(connectionString);
+			var services = new ServiceCollection();
+
+			services
+				.AddSingleton(DispatcherQueue.GetForCurrentThread())
+				.AddDbContextPool<WordsDbContext>(options =>
+				{
+					var dbPath = Package.Current.InstalledPath + "/Assets/Databases/khdict.sqlite";
+					var connectionString = "Data Source=" + dbPath;
+					options
+						.UseSqlite(connectionString);
 #if DEBUG
-							options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-								.EnableSensitiveDataLogging()
-								.EnableDetailedErrors();
+					options
+						.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
+						.EnableSensitiveDataLogging()
+						.EnableDetailedErrors();
 #endif
-						})
-						.AddDbContextPool<LocalDbContext>(options =>
-						{
-							var dbPath = ApplicationData.Current.LocalFolder.Path + "/local.sqlite";
-							var connectionString = "Data Source=" + dbPath;
-							options
-								.UseSqlite(connectionString);
+				})
+				.AddDbContextPool<LocalDbContext>(options =>
+				{
+					var dbPath = ApplicationData.Current.LocalFolder.Path + "/local.sqlite";
+					var connectionString = "Data Source=" + dbPath;
+					options
+						.UseSqlite(connectionString);
 #if DEBUG
-							options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
-								.EnableSensitiveDataLogging()
-								.EnableDetailedErrors();
+					options
+						.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()))
+						.EnableSensitiveDataLogging()
+						.EnableDetailedErrors();
 #endif
-						})
-						.AddDbContext<LocalDbContext>()
-						.AddTransient<WordsViewModel>()
-				)
-				.Build();
-			host.RunAsync();
-			Services = host.Services;
+				})
+				.AddTransient<WordsViewModel>();
+
+			Services = services.BuildServiceProvider();
 
 			InitializeComponent();
 

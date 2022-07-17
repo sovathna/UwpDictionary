@@ -74,14 +74,21 @@
 							Margin="0,32,0,0"
 							HorizontalAlignment="Center"
 							HorizontalContentAlignment="Center">
-			
-
-								<TextBlock					
-									Foreground="{ThemeResource SystemBaseMediumHighColor}"
-									Grid.Column="0"
-									x:Uid="About4" />
-		
+							<TextBlock
+								Foreground="{ThemeResource SystemBaseMediumHighColor}"
+								Grid.Column="0"
+								x:Uid="About4" />
 						</Button>
+
+						<Button
+							Tag="ButtonStore"
+							Foreground="{ThemeResource SystemBaseMediumHighColor}"
+							Click="Button_Click"
+							FontFamily="{StaticResource AppFont}"
+							Margin="0,32,0,0"
+							x:Uid="ButtonStore"
+							HorizontalAlignment="Center"
+							HorizontalContentAlignment="Center" />
 					</StackPanel>
 				</ScrollViewer>
 			</Grid>

@@ -15,13 +15,13 @@ namespace UwpDictionary.Pages.Words
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class WordsPage : Page
+	public sealed partial class HistoriesPage : Page
 	{
 		private readonly WordsViewModel _viewModel = App.Current.Services.GetRequiredService<WordsViewModel>();
 		private readonly ApplicationDataContainer _settings = ApplicationData.Current.LocalSettings;
-		private readonly WordsType Type = WordsType.HOME;
+		private readonly WordsType Type = WordsType.HISTORY;
 
-		public WordsPage()
+		public HistoriesPage()
 		{
 			InitializeComponent();
 			_viewModel.Search("", Type);
@@ -42,6 +42,8 @@ namespace UwpDictionary.Pages.Words
 				DefTextBlock.Blocks.Clear();
 				SetDefinition(word);
 			});
+
+			_viewModel.WordCollection?.RefreshAsync();
 		}
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)

@@ -146,7 +146,7 @@ namespace UwpDictionary.Pages.Words
 				var res = _dispatcherQueue.TryEnqueue(() =>
 				{
 					var wordsSource = new WordsSource(_context, _localContext, type, filter);
-					WordCollection = new IncrementalLoadingCollection<WordsSource, WordUi>(wordsSource, 100);
+					WordCollection = new IncrementalLoadingCollection<WordsSource, WordUi>(wordsSource, 200);
 				});
 				if (res)
 					_lastSearch = filter;

@@ -25,6 +25,9 @@ namespace UwpDictionary.Pages.About
 				case "ButtonSourceCode":
 					_ = Windows.System.Launcher.LaunchUriAsync(new System.Uri(@"https://github.com/sovathna/UwpDictionary/"));
 					break;
+				case "ButtonStore":
+					_ = Windows.System.Launcher.LaunchUriAsync(new System.Uri(@"ms-windows-store://pdp/?productid=9MZF2G4R2HVB"));
+					break;
 			}
 		}
 	}

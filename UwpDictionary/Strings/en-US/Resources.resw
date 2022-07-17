@@ -143,6 +143,9 @@ Designed by Danh Hong</value>
   <data name="BookmarkNavItem.Content" xml:space="preserve">
     <value>បញ្ជីពាក្យចំណាំ</value>
   </data>
+  <data name="ButtonStore.Content" xml:space="preserve">
+    <value>វាយតម្លៃនៅលើ Microsoft Store</value>
+  </data>
   <data name="EmptyTextBlock.Text" xml:space="preserve">
     <value>មិនមានពាក្យ</value>
   </data>

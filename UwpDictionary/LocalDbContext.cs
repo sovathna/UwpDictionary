@@ -9,7 +9,7 @@ namespace UwpDictionary
 
 		public LocalDbContext(DbContextOptions<LocalDbContext> options) : base(options)
 		{
-			Database.EnsureCreated();
+			Database.EnsureCreatedAsync();
 		}
 	}
 }

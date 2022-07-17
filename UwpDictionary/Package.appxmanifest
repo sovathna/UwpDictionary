@@ -8,10 +8,10 @@
 
     <Identity
             Name="5940SATYAMOBILE.KhmerDictionary"
-            Publisher="CN=Sovathna Hong"
-            Version="1.0.3.0"/>
+            Publisher="CN=5035C1AC-5BB2-4A8E-980E-57262712BC0B"
+            Version="1.0.12.0"/>
 
-    <mp:PhoneIdentity PhoneProductId="f20d6ef9-000f-40fc-8a48-8a648614ec29"
+    <mp:PhoneIdentity PhoneProductId="5fd03d6c-d6bd-46b3-bfa8-12058c2b18d8"
                       PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
     <Properties>
@@ -43,8 +43,4 @@
             </uap:VisualElements>
         </Application>
     </Applications>
-
-    <Capabilities>
-        <Capability Name="internetClient"/>
-    </Capabilities>
 </Package>
