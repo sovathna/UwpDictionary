@@ -9,7 +9,7 @@
     <Identity
             Name="5940SATYAMOBILE.KhmerDictionary"
             Publisher="CN=5035C1AC-5BB2-4A8E-980E-57262712BC0B"
-            Version="1.0.12.0"/>
+            Version="1.0.16.0"/>
 
     <mp:PhoneIdentity PhoneProductId="5fd03d6c-d6bd-46b3-bfa8-12058c2b18d8"
                       PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
