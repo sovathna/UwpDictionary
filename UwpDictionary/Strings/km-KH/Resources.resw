@@ -118,74 +118,74 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About1.Text" xml:space="preserve">
-    <value>Khmer Dictionary</value>
+    <value>វចនានុក្រមខ្មែរ</value>
   </data>
   <data name="About2.Text" xml:space="preserve">
-    <value>Font Used
+    <value>ពុម្ពអក្សរប្រើប្រាស់
 Suwannaphum
 Designed by Danh Hong</value>
   </data>
   <data name="About3.Text" xml:space="preserve">
-    <value>Developed by SOVATHNA HONG</value>
+    <value>អភិវឌ្ឍកម្មវិធីដោយ ហុង សុវឌ្ឍនា</value>
   </data>
   <data name="About4.Text" xml:space="preserve">
-    <value>Source code is available on GitHub</value>
+    <value>កូដរបស់កម្មវិធីនេះមាននៅលើ GitHub</value>
   </data>
   <data name="AboutNavItem.Content" xml:space="preserve">
-    <value>About</value>
+    <value>អំពីកម្មវិធី</value>
   </data>
   <data name="AboutTextBlock.Text" xml:space="preserve">
-    <value>About</value>
+    <value>អំពីកម្មវិធី</value>
   </data>
   <data name="AdTextBlock.Text" xml:space="preserve">
-    <value>Advertisement</value>
+    <value>ផ្ទាំងពាណិជ្ជកម្ម</value>
   </data>
   <data name="BookmarkNavItem.Content" xml:space="preserve">
-    <value>Bookmarks</value>
+    <value>បញ្ជីពាក្យចំណាំ</value>
   </data>
   <data name="ButtonStore.Content" xml:space="preserve">
-    <value>View app page on Microsoft Store</value>
+    <value>វាយតម្លៃនៅលើ Microsoft Store</value>
   </data>
   <data name="EmptyTextBlock.Text" xml:space="preserve">
-    <value>No words found!</value>
+    <value>មិនមានពាក្យ</value>
   </data>
   <data name="HistoryNavItem.Content" xml:space="preserve">
-    <value>Histories</value>
+    <value>បញ្ជីពាក្យធ្លាប់មើល</value>
   </data>
   <data name="HomeNavItem.Content" xml:space="preserve">
-    <value>Home</value>
+    <value>វចនានុក្រមខ្មែរ</value>
   </data>
   <data name="RadioThemeDark.Content" xml:space="preserve">
-    <value>Dark</value>
+    <value>ផ្ទៃងងឹត</value>
   </data>
   <data name="RadioThemeLight.Content" xml:space="preserve">
-    <value>Light</value>
+    <value>ផ្ទៃភ្លឺ</value>
   </data>
   <data name="RadioThemeSystem.Content" xml:space="preserve">
-    <value>System</value>
+    <value>ផ្ទៃរបស់ប្រព័ន្ធ</value>
   </data>
   <data name="SearchTextBox.PlaceholderText" xml:space="preserve">
-    <value>Search word</value>
+    <value>ស្វែងរកពាក្យ</value>
   </data>
   <data name="SettingsNavItem.Content" xml:space="preserve">
-    <value>Settings</value>
+    <value>ការកំណត់</value>
   </data>
   <data name="SettingsTextBlock.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>ការកំណត់</value>
   </data>
   <data name="TextBlockTextSize.Text" xml:space="preserve">
-    <value>Definition Text Size</value>
+    <value>ទំហំអក្សរពន្យល់ន័យ</value>
   </data>
   <data name="TextBlockTheme.Text" xml:space="preserve">
-    <value>Theme</value>
+    <value>ពណ៌ផ្ទៃ</value>
   </data>
   <data name="TextSizeEx.Text" xml:space="preserve">
     <value>ភាសាខ្មែរ</value>
   </data>
   <data name="VersionNavItem.Content" xml:space="preserve">
-    <value>Khmer Dictionary 1.0</value>
+    <value>វចនានុក្រមខ្មែរ ជំនាន់ ១.០</value>
   </data>
   <data name="VideoAdNavItem.Content" xml:space="preserve">
-    <value>Watch Ad</value>
+    <value>មើលវីដេអូពាណិជ្ជកម្ម</value>
   </data>
 </root>
